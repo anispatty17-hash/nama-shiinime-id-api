@@ -3,15 +3,20 @@ import { proxyRequest } from '@/lib/api-client';
 
 export default async function Home() {
   try {
-    const data = await proxyRequest('/anime/animekuindo/home');
+    // Call internal API route so errors are normalized and logs are centralized
+    const res = await fetch(new URL('/api/anime/home', process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), {
+      cache: 'no-store',
+    });
+    const json = await res.json().catch(() => null);
+    const payload = json?.data ?? json;
     const list =
-      Array.isArray(data)
-        ? data
-        : Array.isArray(data?.data?.latest)
-        ? data.data.latest
-        : Array.isArray(data?.latest)
-        ? data.latest
-        : data?.results ?? [];
+      Array.isArray(payload)
+        ? payload
+        : Array.isArray(payload?.data?.latest)
+        ? payload.data.latest
+        : Array.isArray(payload?.latest)
+        ? payload.latest
+        : payload?.results ?? [];
 
     return (
       <main style={{ fontFamily: 'system-ui, sans-serif', padding: 24 }}>
