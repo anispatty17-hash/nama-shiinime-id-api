@@ -3,11 +3,27 @@ import React from 'react';
 export default async function Home() {
   try {
     // Call internal API route so errors are normalized and logs are centralized
-    // Use Winbu homepage endpoint
-    const res = await fetch(new URL('/api/anime/winbu/home', process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), {
-      cache: 'no-store',
-    });
-    const json = await res.json().catch(() => null);
+    // Use Winbu homepage endpoint with fallback to anime home if Winbu fails
+    let res;
+    try {
+      res = await fetch(new URL('/api/anime/winbu/home', process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), {
+        cache: 'no-store',
+      });
+    } catch (_) {
+      res = null;
+    }
+
+    let json;
+    if (!res || !res.ok) {
+      try {
+        const fb = await fetch(new URL('/api/anime/home', process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), { cache: 'no-store' });
+        json = await fb.json().catch(() => null);
+      } catch (_) {
+        json = null;
+      }
+    } else {
+      json = await res.json().catch(() => null);
+    }
     const payload = json?.data ?? json;
     const list =
       Array.isArray(payload)

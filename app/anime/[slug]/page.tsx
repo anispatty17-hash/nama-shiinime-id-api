@@ -4,9 +4,26 @@ import Link from 'next/link';
 export default async function AnimeDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   try {
-    // Use Winbu detail endpoint
-    const res = await fetch(new URL(`/api/anime/winbu/anime/${encodeURIComponent(slug)}`, process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), { cache: 'no-store' });
-    const json = await res.json().catch(() => null);
+    // Try Winbu detail endpoint first, fallback to anime detail
+    let res;
+    try {
+      res = await fetch(new URL(`/api/anime/winbu/anime/${encodeURIComponent(slug)}`, process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), { cache: 'no-store' });
+    } catch (_) {
+      res = null;
+    }
+
+    let json;
+    if (!res || !res.ok) {
+      try {
+        const fb = await fetch(new URL(`/api/anime/detail/${encodeURIComponent(slug)}`, process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), { cache: 'no-store' });
+        json = await fb.json().catch(() => null);
+      } catch (_) {
+        json = null;
+      }
+    } else {
+      json = await res.json().catch(() => null);
+    }
+
     const data = json?.data ?? json;
 
     return (
