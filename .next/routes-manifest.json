@@ -1,0 +1,106 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "dynamicRoutes": [
+    {
+      "page": "/api/anime/batch/[slug]",
+      "regex": "^/api/anime/batch/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/api/anime/batch/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/anime/detail/[slug]",
+      "regex": "^/api/anime/detail/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/api/anime/detail/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/anime/episode/[slug]",
+      "regex": "^/api/anime/episode/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/api/anime/episode/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/anime/genre/[genre]",
+      "regex": "^/api/anime/genre/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPgenre": "nxtPgenre"
+      },
+      "namedRegex": "^/api/anime/genre/(?<nxtPgenre>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/anime/server/[id]",
+      "regex": "^/api/anime/server/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/anime/server/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/nekopoi/detail/[slug]",
+      "regex": "^/api/nekopoi/detail/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/api/nekopoi/detail/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/nekopoi/episode/[slug]",
+      "regex": "^/api/nekopoi/episode/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/api/nekopoi/episode/(?<nxtPslug>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "RSC",
+    "varyHeader": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+    "prefetchHeader": "Next-Router-Prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "Next-Router-Segment-Prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  },
+  "rewrites": []
+}
