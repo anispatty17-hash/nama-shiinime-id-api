@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import { buildApiError, buildApiResponse, proxyRequest } from '@/lib/api-client';
 
-export async function GET(request: Request, { params }: { params: { slug?: string[] } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ slug?: string[] }> }) {
   try {
-    const slugArr = params?.slug ?? [];
+    const { slug } = await params;
+    const slugArr = slug ?? [];
     const path = `/anime/winbu/${slugArr.join('/')}`.replace(/\/+$/, '');
 
     const url = new URL(request.url);
@@ -17,9 +18,10 @@ export async function GET(request: Request, { params }: { params: { slug?: strin
   }
 }
 
-export async function POST(request: Request, { params }: { params: { slug?: string[] } }) {
+export async function POST(request: Request, { params }: { params: Promise<{ slug?: string[] }> }) {
   try {
-    const slugArr = params?.slug ?? [];
+    const { slug } = await params;
+    const slugArr = slug ?? [];
     const path = `/anime/winbu/${slugArr.join('/')}`.replace(/\/+$/, '');
     const body = await request.text();
     const data = await proxyRequest(path, { method: 'POST', data: body, headers: { 'Content-Type': request.headers.get('content-type') ?? 'application/json' } });
