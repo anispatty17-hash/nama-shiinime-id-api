@@ -39,7 +39,7 @@ export default async function Home() {
             })}
           </ul>
         ) : (
-          <pre style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(data, null, 2)}</pre>
+          <pre style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(payload, null, 2)}</pre>
         )}
       </main>
     );
