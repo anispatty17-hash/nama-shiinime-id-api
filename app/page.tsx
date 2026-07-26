@@ -1,5 +1,4 @@
 import React from 'react';
-import { proxyRequest } from '@/lib/api-client';
 
 export default async function Home() {
   try {
@@ -26,9 +25,9 @@ export default async function Home() {
 
         {Array.isArray(list) && list.length > 0 ? (
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            {list.map((item: any, idx: number) => {
-              const title = item.title ?? item.name ?? item.slug ?? `Item ${idx}`;
-              const slug = item.slug ?? item.id ?? item.anime_slug ?? item.name ?? '';
+            {list.map((item: Record<string, unknown>, idx: number) => {
+              const title = String(item['title'] ?? item['name'] ?? item['slug'] ?? `Item ${idx}`);
+              const slug = String(item['slug'] ?? item['id'] ?? item['anime_slug'] ?? item['name'] ?? '');
               return (
                 <li key={idx} style={{ marginBottom: 12 }}>
                   <a href={`/anime/${encodeURIComponent(slug)}`} style={{ color: '#0ea5a4' }}>

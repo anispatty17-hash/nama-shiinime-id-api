@@ -27,11 +27,12 @@ client.interceptors.response.use(
       if (error.response) {
         const body = error.response.data;
         const message = typeof body === 'object' ? JSON.stringify(body) : String(body);
-        const err = new Error(message);
-        (err as any).status = error.response.status;
+        type UpstreamError = Error & { status?: number };
+        const err = new Error(message) as UpstreamError;
+        err.status = error.response.status;
         return Promise.reject(err);
       }
-    } catch (e) {
+    } catch (_) {
       // fallthrough to reject original error
     }
     return Promise.reject(error);

@@ -12,8 +12,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ slug
 
     const data = await proxyRequest(`${path}${search}`);
     return NextResponse.json(buildApiResponse(data, 'Success'));
-  } catch (error: any) {
-    const status = error?.status ?? 502;
+  } catch (error: unknown) {
+    const status = (error as { status?: number })?.status ?? 502;
     return NextResponse.json(buildApiError('Failed to fetch winbu resource', error), { status });
   }
 }
@@ -26,8 +26,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ slu
     const body = await request.text();
     const data = await proxyRequest(path, { method: 'POST', data: body, headers: { 'Content-Type': request.headers.get('content-type') ?? 'application/json' } });
     return NextResponse.json(buildApiResponse(data, 'Success'));
-  } catch (error: any) {
-    const status = error?.status ?? 502;
+  } catch (error: unknown) {
+    const status = (error as { status?: number })?.status ?? 502;
     return NextResponse.json(buildApiError('Failed to post to winbu resource', error), { status });
   }
 }
