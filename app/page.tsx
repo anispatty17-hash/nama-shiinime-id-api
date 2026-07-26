@@ -4,7 +4,14 @@ import { proxyRequest } from '@/lib/api-client';
 export default async function Home() {
   try {
     const data = await proxyRequest('/anime/animekuindo/home');
-    const list = Array.isArray(data) ? data : data?.results ?? data;
+    const list =
+      Array.isArray(data)
+        ? data
+        : Array.isArray(data?.data?.latest)
+        ? data.data.latest
+        : Array.isArray(data?.latest)
+        ? data.latest
+        : data?.results ?? [];
 
     return (
       <main style={{ fontFamily: 'system-ui, sans-serif', padding: 24 }}>
