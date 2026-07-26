@@ -4,7 +4,8 @@ import { proxyRequest } from '@/lib/api-client';
 export default async function Home() {
   try {
     // Call internal API route so errors are normalized and logs are centralized
-    const res = await fetch(new URL('/api/anime/home', process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), {
+    // Use Winbu homepage endpoint
+    const res = await fetch(new URL('/api/anime/winbu/home', process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), {
       cache: 'no-store',
     });
     const json = await res.json().catch(() => null);

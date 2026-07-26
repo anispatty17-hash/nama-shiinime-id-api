@@ -4,7 +4,8 @@ import { proxyRequest } from '@/lib/api-client';
 export default async function AnimeDetail({ params }: { params: { slug: string } }) {
   const { slug } = params;
   try {
-    const res = await fetch(new URL(`/api/anime/detail/${encodeURIComponent(slug)}`, process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), { cache: 'no-store' });
+    // Use Winbu detail endpoint
+    const res = await fetch(new URL(`/api/anime/winbu/anime/${encodeURIComponent(slug)}`, process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), { cache: 'no-store' });
     const json = await res.json().catch(() => null);
     const data = json?.data ?? json;
 
