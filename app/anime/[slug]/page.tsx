@@ -1,8 +1,8 @@
 import React from 'react';
 import { proxyRequest } from '@/lib/api-client';
 
-export default async function AnimeDetail({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function AnimeDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   try {
     // Use Winbu detail endpoint
     const res = await fetch(new URL(`/api/anime/winbu/anime/${encodeURIComponent(slug)}`, process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'), { cache: 'no-store' });
