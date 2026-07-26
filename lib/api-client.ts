@@ -22,7 +22,18 @@ client.interceptors.request.use((config) => {
 client.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    console.error('[proxy] request failed', error.message);
+    try {
+      console.error('[proxy] request failed', error.message);
+      if (error.response) {
+        const body = error.response.data;
+        const message = typeof body === 'object' ? JSON.stringify(body) : String(body);
+        const err = new Error(message);
+        (err as any).status = error.response.status;
+        return Promise.reject(err);
+      }
+    } catch (e) {
+      // fallthrough to reject original error
+    }
     return Promise.reject(error);
   },
 );
